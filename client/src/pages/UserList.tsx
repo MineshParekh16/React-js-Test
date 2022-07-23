@@ -3,6 +3,7 @@ import { USERS_LIST }  from "../constant/api";
 import { APIServices } from "../services/Common";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Button } from "primereact/button";
 
 
 class UserList extends Component<any, any> {
@@ -28,6 +29,20 @@ class UserList extends Component<any, any> {
         return props.rowIndex + 1;
     }
 
+    setID = (rowData: any) => {
+        window.location.replace(`/userdetails/${rowData}`);
+    };
+    
+    actionBodyTemplate = (rowData: any) => {
+        return (
+          <>
+            <Button label="User Details" type="button" onClick={() => this.setID(rowData.id)}>
+            </Button>
+          </>
+        );
+      };
+    
+
     render () {
         const { UserListvalue, rows } = this.state;
         return (
@@ -38,6 +53,7 @@ class UserList extends Component<any, any> {
                 <Column field="email" header="Email" sortable></Column> 
                 <Column field="username" header="UserName" sortable></Column>
                 <Column field="phone" header="Phone No" sortable></Column>
+                <Column field="id" header="Action" body={this.actionBodyTemplate}></Column>
             </DataTable>
             </div>
         )
